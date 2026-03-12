@@ -54,7 +54,7 @@ public class Autor implements Comparable<Autor> {
 		return Objects.equals(apellidos, other.apellidos) && Objects.equals(nombre, other.nombre);
 	}
 
-	private static Comparator c = Comparator.comparing(Autor::getApellidos).thenComparing(Autor::getNombre);
+	private static Comparator<Autor> c = Comparator.comparing(Autor::getApellidos).thenComparing(Autor::getNombre);
 	@Override
 	public int compareTo(Autor o) {
 //		int resultado = apellidos.compareTo(o.apellidos);

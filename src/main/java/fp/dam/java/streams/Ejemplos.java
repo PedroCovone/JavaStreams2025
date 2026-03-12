@@ -1,6 +1,5 @@
 package fp.dam.java.streams;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -28,17 +27,20 @@ public class Ejemplos {
 				.stream()
 				.map(libro -> libro.getAutor().getNombre())
 				.collect(Collectors.toSet());
+		System.out.println(autores2);
 		
 		Set<String> autores3 = libros
 				.stream()
 				.map(libro -> libro.getAutor().getNombre())
 				.collect(Collectors.toCollection(TreeSet::new));
+		System.out.println(autores3);
 		
 		Set<String> autores4 = libros
 				.stream()
 				.map(Libro::getAutor)
 				.map(Autor::getApellidosNombre)
 				.collect(Collectors.toCollection(TreeSet::new));
+		System.out.println(autores4);
 		
 	}
 
