@@ -129,7 +129,9 @@ public class BloqueA {
 	
 	public static void main(String[] args) {
 //		ejercicio01(Datos.getPalabras());
-		ejercicio02b(Datos.getPalabras()).entrySet()
+//		ejercicio02b(Datos.getPalabras()).entrySet()
+//				.forEach(e -> System.out.println(e.getKey() + ": " + e.getValue()));
+		ejercicio04(Datos.getPalabras()).entrySet()
 				.forEach(e -> System.out.println(e.getKey() + ": " + e.getValue()));
 //		ejercicio03(Datos.getPalabras(), 5);
 //		System.out.println(ejercicio07(Datos.getPalabras()));
