@@ -3,6 +3,7 @@ package fp.dam.java.streams;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import static java.util.stream.Collectors.*;
 import java.util.stream.Stream;
 
 
@@ -71,8 +72,8 @@ public class BloqueB {
 	 * Crea un método estático que acepte una secuencia de cadenas y retorne la longitud media.
 	 */
 	
-	static long ejercicio07(Stream<String> secuencia) {
-		return 0;
+	static double ejercicio07(Stream<String> secuencia) {
+		return secuencia.collect(averagingInt(String::length));
 	}
 	
 	/*
