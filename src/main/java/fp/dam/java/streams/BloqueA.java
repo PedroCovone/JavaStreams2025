@@ -9,6 +9,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.Function;
 import static java.util.stream.Collectors.*;
+
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static java.util.function.Function.*;
 
@@ -111,6 +113,9 @@ public class BloqueA {
 	 * longitud presente en la secuencia.
 	 */
 	
+	public static Map<Integer, Long> ejercicio06(Stream<String> secuencia) {
+		return secuencia.collect(groupingBy(String::length, Collectors.counting()));
+	}
 	
 	
 	/*
@@ -125,15 +130,32 @@ public class BloqueA {
 				.collect(toCollection(LinkedList::new));
 	}
 	
+	/*
+	 * Crea un método estático que acepte una secuencia de palabras y una longitud mayor que 2,
+	 * y retorne la lista de palabras de esa longitud que están contenidas en otras palabras.
+	 * Se descartarán todos los casos de palabras contenidas en ellas mismas.
+	 */
+	
+	public static List<String> ejercicio09(Stream<String> secuencia, int longitud) {
+		if (longitud < 3)
+			throw new IllegalArgumentException();
+		List<String> palabras = secuencia.toList();
+		return palabras.stream()
+				.filter(s -> s.length() == longitud &&
+						palabras.stream().anyMatch(s2 -> !s2.equals(s) && s2.contains(s)))
+				.toList();
+		
+	}
 	
 	
 	public static void main(String[] args) {
 //		ejercicio01(Datos.getPalabras());
 //		ejercicio02b(Datos.getPalabras()).entrySet()
 //				.forEach(e -> System.out.println(e.getKey() + ": " + e.getValue()));
-		ejercicio04(Datos.getPalabras()).entrySet()
-				.forEach(e -> System.out.println(e.getKey() + ": " + e.getValue()));
+//		ejercicio04(Datos.getPalabras()).entrySet()
+//				.forEach(e -> System.out.println(e.getKey() + ": " + e.getValue()));
 //		ejercicio03(Datos.getPalabras(), 5);
 //		System.out.println(ejercicio07(Datos.getPalabras()));
+		System.out.println(ejercicio09(Datos.getPalabras(), 5));
 	}
 }

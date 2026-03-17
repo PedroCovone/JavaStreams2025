@@ -1,6 +1,12 @@
 package fp.dam.java.streams;
 
+import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.averagingInt;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.partitioningBy;
+import static java.util.stream.Collectors.toCollection;
+import static java.util.stream.Collectors.toSet;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -8,9 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.OptionalLong;
 import java.util.Set;
-import static java.util.function.Function.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import static java.util.stream.Collectors.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -134,7 +142,9 @@ public class BloqueB {
 	 */
 	
 	static Map<Integer, Long> ejercicio08(Stream<String> secuencia) {
-		return null;
+		return secuencia
+				.flatMap(s -> pattern2.matcher(s).results().map(r -> r.group()))
+				.collect(groupingBy(String::length, Collectors.counting()));
 	}
 	
 	/*
@@ -145,7 +155,10 @@ public class BloqueB {
 	 */
 	
 	static long ejercicio09(Stream<String> secuencia) {
-		return 0;
+		return secuencia
+				.flatMap(s -> pattern2.matcher(s).results().map(r -> r.group()))
+				.distinct()
+				.count();
 	}
 	
 	
@@ -156,8 +169,25 @@ public class BloqueB {
 	 * y consonantes de la secuencia.
 	 */
 	
-	static Map<Boolean, Long> ejercicio10(Stream<String> secuencia) {
-		return null;
+	static Map<Boolean, Long> ejercicio10a(Stream<String> secuencia) {
+		return secuencia
+				.flatMapToInt(s -> s.toLowerCase().chars())
+				.mapToObj(c -> Character.valueOf((char) c))
+				.filter(Character::isAlphabetic)
+				.collect(partitioningBy(
+						vocales::contains,
+						counting()));
+	}
+	
+	static Set<Character> vocales = Set.of('a', 'e', 'i','o', 'u');
+	static Map<String, Long> ejercicio10b(Stream<String> secuencia) {
+		return secuencia
+				.flatMapToInt(s -> s.toLowerCase().chars())
+				.mapToObj(c -> Character.valueOf((char) c))
+				.filter(Character::isAlphabetic)
+				.collect(groupingBy(
+						c -> vocales.contains(c) ? "vocales" : "consonantes",
+						counting()));
 	}
 	
 	
@@ -180,9 +210,12 @@ public class BloqueB {
 //			System.out.println("No se ha podido hallar el máximo");
 //		else
 //			System.out.println("Máximo = " + max.getAsLong());
-		System.out.println(ejercicio03(ejercicio01(Datos.getLineas())));
+//		System.out.println(ejercicio03(ejercicio01(Datos.getLineas())));
 //		System.out.println(ejercicio05(Datos.getLineas()));
-		
+//		ejercicio08(Datos.getLineas()).entrySet().forEach(System.out::println);
+//		System.out.println(ejercicio09(Datos.getLineas()));
+		ejercicio10a(Datos.getLineas()).entrySet().forEach(System.out::println);
+		ejercicio10b(Datos.getLineas()).entrySet().forEach(System.out::println);
 	}
 	
 }
